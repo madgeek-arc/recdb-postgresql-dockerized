@@ -27,23 +27,27 @@ RUN set -eux; \
 	chown -R postgres:postgres /var/lib/postgresql
 
 RUN mkdir /recdb && \
-	mkdir /recdb-postgresql && \
-	git clone https://github.com/DataSystemsLab/recdb-postgresql.git && \
-	chown -R postgres:postgres /recdb /recdb-postgresql
+	mkdir /recdb-postgresql-dockerized && \
+	git clone https://github.com/madgeek-arc/recdb-postgresql-dockerized.git && \
+	chown -R postgres:postgres /recdb /recdb-postgresql-dockerized
 
 USER postgres
 
-RUN	cd recdb-postgresql/PostgreSQL/ && \
+RUN	cd recdb-postgresql-dockerized/PostgreSQL/ && \
 	perl ./scripts/install.pl /recdb 
 
-# USER root
+USER root
 
-# RUN	ln -s recdb/bin/psql /usr/bin/psql && \
-#	perl -i -pe 's/#listen_addresses = 'localhost'/listen_addresses = '*'/g' /recdb-postgresql/PostgreSQL/data/postgresql.conf
+# RUN	ln -s recdb/bin/psql /usr/bin/psql
 
-# USER postgres
+COPY ./postgresql.conf recdb-postgresql-dockerized/PostgreSQL/data/
+
+COPY ./pg_hba.conf recdb-postgresql-dockerized/PostgreSQL/data/
+
+COPY ./start.sh /
+
+USER postgres
 
 EXPOSE 5432
 
-CMD cd /recdb-postgresql/PostgreSQL/ && \
-	perl scripts/pgbackend.pl
+CMD bash start.sh

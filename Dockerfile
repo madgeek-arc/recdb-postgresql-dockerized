@@ -6,9 +6,9 @@ RUN apt-get -y update && \
     apt-get -y install libreadline-dev && \
     apt-get -y install bison && \
     apt-get -y install zlib1g-dev && \
-    apt-get -y install git && \
-    #apt-get -y install nano && \
-    apt-get -y install wget
+#    apt-get -y install nano && \
+#    apt-get -y install wget && \
+    apt-get -y install git
 
 #Downloading a specific version of flex
 #RUN wget https://launchpad.net/ubuntu/+source/flex/2.5.31-31/+build/88281/+files/flex_2.5.31-31_amd64.deb

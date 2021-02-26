@@ -7,13 +7,15 @@ RUN apt-get -y update && \
     apt-get -y install bison && \
     apt-get -y install zlib1g-dev && \
     apt-get -y install git && \
-    apt-get -y install nano && \
+    #apt-get -y install nano && \
     apt-get -y install wget
 
 #Downloading a specific version of flex
-RUN wget https://launchpad.net/ubuntu/+source/flex/2.5.31-31/+build/88281/+files/flex_2.5.31-31_amd64.deb
+#RUN wget https://launchpad.net/ubuntu/+source/flex/2.5.31-31/+build/88281/+files/flex_2.5.31-31_amd64.deb
+#Copy local flex
+COPY ./flex_2.5.31-31_amd64.deb /
 
-#Flex would put a warning/error message that would interrupt the build, added forcefully 0 exit code.
+#Flex would put a warning/error message that would interrupt the build, forced 0 exit code.
 RUN dpkg -i flex_2.5.31-31_amd64.deb ; exit 0
 
 # Postgres group, user and stuff

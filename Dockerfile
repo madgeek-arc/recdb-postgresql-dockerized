@@ -38,18 +38,6 @@ USER postgres
 RUN	cd recdb-postgresql-dockerized/PostgreSQL/ && \
 	perl ./scripts/install.pl /recdb 
 
-USER root
-
-# RUN	ln -s recdb/bin/psql /usr/bin/psql
-
-COPY ./postgresql.conf recdb-postgresql-dockerized/PostgreSQL/data/
-
-COPY ./pg_hba.conf recdb-postgresql-dockerized/PostgreSQL/data/
-
-COPY ./start.sh /
-
-USER postgres
-
 EXPOSE 5432
 
-CMD bash start.sh
+CMD bash /recdb-postgresql-dockerized/start.sh

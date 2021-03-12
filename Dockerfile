@@ -40,4 +40,7 @@ RUN	cd recdb-postgresql-dockerized/PostgreSQL/ && \
 
 EXPOSE 5432
 
+#COPY ./start.sh /
+#CMD bash /start.sh
+
 CMD bash /recdb-postgresql-dockerized/start.sh
